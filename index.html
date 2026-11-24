@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anwesha Ghosh — 3D & Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: moody, cinematic, a little loud — an artist's reel, not a CV
+   IDEA: a night screening — the work plays itself, the page stays dark around it
+   PICTURE: the storm render, full-bleed and moving, behind the name
+   COLOUR and TYPE: near-black ground, bone white ink, one ember accent; soft colour glows drift behind sections; Archivo Black + Poppins
+   LAYOUT: full-bleed hero, then 3D grid, posters (one large + four), event design strip, about, contact */
+:root{color-scheme:dark;--bg:#07070a;--ink:#f2efe9;--soft:#d8d2c7;--mute:#a9a397;--acc:#e2552d;--slot:#16161b;--line:rgba(242,239,233,.14)}
+*{box-sizing:border-box;min-width:0;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px;overflow-x:clip}
+main{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 'Poppins',system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img,video{display:block;width:100%;height:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+.grain{position:fixed;inset:0;background:url(img/noise.png);pointer-events:none;z-index:50;opacity:.9}
+.glow{position:absolute;border-radius:50%;filter:blur(110px);opacity:.45;pointer-events:none;z-index:0}
+.disp{font-family:'Archivo Black',Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;line-height:.95}
+.outline{color:transparent;-webkit-text-stroke:2px var(--ink)}
+.wrap{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:0 clamp(18px,4.5vw,64px)}
+
+/* nav */
+nav{position:absolute;top:0;left:0;right:0;z-index:5}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:92px;gap:16px;flex-wrap:wrap}
+.logo{font-family:'Archivo Black';font-size:19px;letter-spacing:.06em;text-transform:uppercase}
+.links{display:flex;gap:clamp(14px,2.6vw,38px);align-items:center;font-weight:500;font-size:15px}
+.links a{padding:10px 0}
+.links .pill{border:1px solid rgba(242,239,233,.5);border-radius:999px;padding:9px 20px;transition:background .2s,color .2s}
+.links .pill:hover{background:var(--ink);color:var(--bg)}
+
+/* hero */
+.hero{position:relative;height:min(100svh,920px);min-height:620px;overflow:hidden}
+.hero video{position:absolute;inset:0}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,7,10,.6) 0%,rgba(7,7,10,0) 28%,rgba(7,7,10,.15) 55%,var(--bg) 100%)}
+.hero .wrap{position:absolute;inset:auto 0 clamp(40px,8vh,96px) 0;z-index:2}
+.eyebrow{font-size:14px;color:#e4dfd6;margin-bottom:18px}
+.hero .wrap{text-shadow:0 2px 24px rgba(0,0,0,.45)}
+.tch{display:none}@media(hover:none){.hov{display:none}.tch{display:inline}}
+.hero h1{font-size:clamp(46px,8vw,116px)}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:30px;flex-wrap:wrap}
+.hero-row p{font-size:clamp(16px,1.4vw,18px);color:var(--soft);max-width:34ch}
+.now{display:flex;align-items:center;gap:12px;font-size:14px;color:#c9c3b8}
+.now i{width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 0 rgba(226,85,45,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(226,85,45,0)}100%{box-shadow:0 0 0 0 rgba(226,85,45,0)}}
+
+/* sections */
+section{position:relative;padding:clamp(80px,10vw,128px) 0 24px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--line);margin-bottom:44px}
+.head h2{font-size:clamp(40px,5.4vw,68px)}
+.head .num{display:block;font-family:'Poppins';font-size:14px;color:var(--acc);letter-spacing:.14em;margin-bottom:12px}
+.head p{color:var(--mute);font-size:15px;max-width:38ch;text-align:right}
+
+/* video grid */
+.vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 32px}
+.card{display:block;width:100%;text-align:left}
+.thumb{position:relative;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:var(--slot)}
+.thumb img,.thumb video{position:absolute;inset:0;transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.thumb video{opacity:0}
+.card.playing .thumb video{opacity:1}
+.card:hover .thumb img,.card:hover .thumb video{transform:scale(1.035)}
+.play{position:absolute;left:18px;bottom:18px;width:46px;height:46px;border-radius:50%;background:rgba(7,7,10,.55);border:1px solid rgba(242,239,233,.6);display:grid;place-items:center;backdrop-filter:blur(4px);transition:background .2s}
+.play::before{content:"";border-left:13px solid var(--ink);border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px}
+.card:hover .play{background:var(--acc);border-color:var(--acc)}
+.dur{position:absolute;right:14px;top:14px;font-size:12px;padding:4px 10px;border-radius:999px;background:rgba(7,7,10,.6)}
+.meta{display:flex;justify-content:space-between;gap:12px;margin-top:15px;font-size:15px}
+.meta b{font-weight:600}
+.meta span{color:var(--mute);white-space:nowrap}
+.sub{color:var(--mute);font-size:14px;margin:72px 0 22px}
+.sgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:40px 32px}
+.sgrid>*{grid-column:span 2}.sgrid>:nth-child(n+4){grid-column:span 3}
+.sgrid .thumb{aspect-ratio:16/9}
+
+/* posters */
+.pgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.prow{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.6fr);gap:32px;margin-top:40px;align-items:start}
+.prow .pimg{aspect-ratio:auto;height:auto}.prow .pimg img{height:auto}
+.pstack{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.pimg{position:relative;border-radius:6px;overflow:hidden;background:var(--slot);aspect-ratio:4/5}
+.pimg img{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.card:hover .pimg img{transform:scale(1.03)}
+.big .pimg{aspect-ratio:auto;height:100%;min-height:520px}
+.big{display:flex;flex-direction:column}
+.big .pimg{flex:1}
+.cap{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-size:14px}
+.cap span{color:var(--mute)}
+
+/* event design */
+.egrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.5fr) minmax(0,1fr) minmax(0,.707fr);gap:40px 28px;align-items:start}
+.egrid .pimg{aspect-ratio:1}.egrid .card:nth-child(2) .pimg{aspect-ratio:1/2}.egrid .card:nth-child(4) .pimg{aspect-ratio:.707}
+.egrid .wide{grid-column:1/-1}.egrid .wide .pimg{aspect-ratio:2.12}
+.egrid .wide img{object-position:left center}
+.logo-img img{object-fit:contain;background:#000}
+
+.xp{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);gap:clamp(8px,7vw,96px);padding:28px 0;border-bottom:1px solid var(--line)}.xp:first-child{padding-top:0}.xp:last-child{border-bottom:0}
+.xp-when{color:var(--mute);font-size:15px;padding-top:6px;white-space:nowrap}
+.xp h3{font-family:'Archivo Black';font-weight:400;font-size:clamp(22px,2.2vw,28px);text-transform:uppercase;letter-spacing:.01em}
+.xp-org{color:var(--acc);font-size:16px;margin:6px 0 16px}
+.xp p{font-size:clamp(16px,1.3vw,18px);line-height:1.7;color:var(--soft);max-width:60ch}
+@media(max-width:980px){.xp{grid-template-columns:minmax(0,1fr)}}
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);gap:clamp(32px,7vw,96px)}
+.about .disp{font-size:clamp(28px,3vw,40px);line-height:1.1}
+.about p{font-size:clamp(17px,1.4vw,20px);line-height:1.7;color:var(--soft);margin-bottom:22px;max-width:60ch}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.chips span{border:1px solid rgba(242,239,233,.3);border-radius:999px;padding:8px 18px;font-size:14px}
+
+/* contact */
+.contact h2{font-size:clamp(40px,9.5vw,136px)}
+.crow{display:flex;flex-wrap:wrap;gap:24px 64px;margin-top:48px;font-size:clamp(18px,1.6vw,22px)}
+.crow small{display:block;font-size:13px;color:var(--mute);margin-bottom:6px}
+.crow a:hover{color:var(--acc)}
+footer{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--line);margin-top:96px;padding:28px 0 44px;font-size:13px;color:#8a8478}
+footer a:hover{color:var(--ink)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(5,5,7,.94);display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,56px)}
+.lb.open{display:flex}
+.lb-inner{width:min(1280px,100%);max-height:100%;display:flex;flex-direction:column;gap:14px}
+.lb-media{display:flex;justify-content:center;max-height:calc(100svh - 160px)}
+.lb-media video,.lb-media img{width:auto;max-width:100%;max-height:calc(100svh - 160px);height:auto;object-fit:contain;border-radius:6px;background:#000}
+.lb-cap{display:flex;justify-content:space-between;gap:16px;font-size:15px}
+.lb-cap span{color:var(--mute)}
+.lb-close{position:absolute;top:14px;right:18px;width:48px;height:48px;border-radius:50%;font-size:26px;line-height:1;border:1px solid rgba(242,239,233,.4)}
+.lb-close:hover{background:var(--ink);color:var(--bg)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(242,239,233,.4);font-size:20px}
+.lb-nav:hover{background:var(--ink);color:var(--bg)}
+.lb-prev{left:14px}.lb-next{right:14px}
+
+@media(max-width:980px){
+  .vgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.sgrid>*,.sgrid>:nth-child(n+4){grid-column:auto}.sgrid>:first-child{grid-column:1/-1}
+  .prow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.prow>:last-child{grid-column:1/-1}
+  .pgrid,.about{grid-template-columns:minmax(0,1fr)}
+  .big .pimg{min-height:0;aspect-ratio:4/5}
+  .egrid{grid-template-columns:repeat(2,minmax(0,1fr))}.egrid .cap{flex-direction:column;gap:2px}.egrid .card .pimg,.egrid .card:nth-child(n) .pimg{aspect-ratio:auto;height:clamp(200px,48vw,300px);background:none}.egrid .pimg img{object-fit:contain}
+  .egrid .card:nth-child(3){max-width:none}
+  .egrid .wide{grid-column:1/-1}
+  .head p{text-align:left}
+}
+@media(max-width:600px){
+  .links a:not(.pill){display:none}
+  .vgrid,.sgrid,.prow{grid-template-columns:minmax(0,1fr)}.sgrid>*{grid-column:auto!important}
+  .pstack{gap:18px}
+  .hero-row{flex-direction:column;align-items:flex-start}
+  .outline{-webkit-text-stroke-width:1.4px}
+  .lb-nav{top:auto;bottom:18px;transform:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<nav><div class="wrap">
+  <a class="logo" href="#top">Anwesha Ghosh</a>
+  <div class="links"><a href="#work">3D</a><a href="#posters">Posters</a><a href="#events">Event design</a><a href="#about">About</a><a class="pill" href="#contact">Contact</a></div>
+</div></nav>
+
+<header class="hero" id="top">
+  <video id="heroVid" src="media/ocean.mp4" poster="img/ocean.jpg" autoplay muted loop playsinline aria-label="Storm — Blender ocean animation"></video>
+  <div class="wrap">
+    <div class="eyebrow">3D artist &amp; graphic designer — Kolkata, India</div>
+    <h1 class="disp">Moody worlds,<br><span class="outline">loud posters.</span></h1>
+    <div class="hero-row">
+      <p>I build cinematic scenes in Blender and design posters full of grain, texture and type.</p>
+      <button class="now" id="heroOpen"><i></i>Now playing — Storm, Blender animation</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="work">
+  <div class="glow" style="width:700px;height:700px;left:-300px;top:520px;background:#c2411f"></div>
+  <div class="wrap">
+    <div class="head"><h2 class="disp"><span class="num">01</span>3D &amp; Motion</h2><p><span class="hov">Hover to preview, click to watch the full render.</span><span class="tch">Previews play as you scroll — tap to watch the full render.</span></p></div>
+    <div class="vgrid" id="vgrid"></div>
+    <div class="sub">Stills</div>
+    <div class="sgrid" id="sgrid"></div>
+  </div>
+</section>
+
+<section id="posters">
+  <div class="glow" style="width:640px;height:640px;right:-260px;top:300px;background:#2b4fa8"></div>
+  <div class="wrap">
+    <div class="head"><h2 class="disp"><span class="num">02</span>Posters</h2><p>Personal work — grain, halftone, glitch and hand-built type.</p></div>
+    <div class="pgrid">
+      <button class="card big" data-img="img/icarus.jpg" data-title="Icarus" data-tag="Digital poster">
+        <div class="pimg"><img src="img/icarus.jpg" alt="Icarus falling toward a churning black-and-white sea beneath a dark sun" loading="lazy"></div>
+        <div class="cap"><b>Icarus</b><span>Digital poster</span></div>
+      </button>
+      <div class="pstack" id="pstack"></div>
+    </div>
+    <div class="prow" id="prow"></div>
+  </div>
+</section>
+
+<section id="events">
+  <div class="glow" style="width:640px;height:640px;left:-280px;top:200px;background:#7a2f8f"></div>
+  <div class="wrap">
+    <div class="head"><h2 class="disp"><span class="num">03</span>Event design</h2><p>Posters, standees, logos and brochures for college societies at St. Xavier's — Analytica and Khel.</p></div>
+    <div class="egrid" id="egrid"></div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="head"><h2 class="disp"><span class="num">04</span>Experience</h2></div>
+    <div class="xp">
+      <div class="xp-when">Sep 2026 – present</div>
+      <div>
+        <h3>Creative Intern</h3>
+        <div class="xp-org">Creators Lab, an NPTEL+ initiative</div>
+        <p>Visual design and content for a creative-education brand working across AI, filmmaking and visual storytelling: social posts, carousels and editorial posters, promotional design for the NPTEL+ × Creators Lab workshop series, and writing for <i>The Greenlight Slate</i> newsletter, including company features and industry interviews.</p>
+      </div>
+    </div>
+    <div class="xp">
+      <div class="xp-when">2025</div>
+      <div>
+        <h3>Freelance Designer</h3>
+        <div class="xp-org">The Vigyan Chronicles</div>
+        <p>Designed their logo and brochure.</p>
+      </div>
+    </div>
+    <div class="xp">
+      <div class="xp-when">2025</div>
+      <div>
+        <h3>Marketing Head</h3>
+        <div class="xp-org">SXCNCC Khel-8</div>
+        <p>Coordinated entire team of designers and designed the logo for the event.</p>
+      </div>
+    </div>
+    <div class="xp">
+      <div class="xp-when">2024</div>
+      <div>
+        <h3>Deputy Head of Design</h3>
+        <div class="xp-org">Department of Mathematics, Analytica</div>
+        <p>Designed social media posts, standees and banners.</p>
+      </div>
+    </div>
+    <div class="xp">
+      <div class="xp-when">2024</div>
+      <div>
+        <h3>Marketing Coordinator</h3>
+        <div class="xp-org">SXCNCC Khel-7</div>
+        <p>Coordinated entire team of designers and designed magazines, brochures, certificates and social media posts.</p>
+      </div>
+    </div>
+    <div class="xp">
+      <div class="xp-when">2023</div>
+      <div>
+        <h3>Designer</h3>
+        <div class="xp-org">SXCNCC Khel-6</div>
+        <p>Designed banners, standees, certificates, carousels, bookmarks and social media posts.</p>
+      </div>
+    </div>
+    <div class="xp">
+      <div class="xp-when">2022</div>
+      <div>
+        <h3>Designer</h3>
+        <div class="xp-org">SXCNCC</div>
+        <p>Joined as a designer, designed social media posts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="head"><h2 class="disp"><span class="num">05</span>About</h2></div>
+    <div class="about">
+      <div class="disp">I make things that feel like a half-remembered dream.</div>
+      <div>
+        <p>I'm Anwesha, a 3D artist and graphic designer based in Kolkata. I spend most of my time in Blender, building quiet, cinematic scenes and learning how light changes a story.</p>
+        <p>Alongside 3D, I've led design for college events and societies — posters, standees, brochures, logos — so I care as much about type and layout as I do about renders.</p>
+        <div class="chips"><span>Blender</span><span>Lighting</span><span>Animation</span><span>Photoshop</span><span>Illustrator</span><span>Canva</span><span>2D animation</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="glow" style="width:700px;height:700px;right:-280px;top:120px;background:#c98a2b"></div>
+  <div class="wrap">
+    <span style="display:block;color:var(--acc);font-size:14px;letter-spacing:.14em">06</span>
+    <h2 class="disp" style="margin-top:14px">Let's make<br><span class="outline">something.</span></h2>
+    <div class="crow">
+      <div><small>Email</small><a href="mailto:anweshagh.in@gmail.com">anweshagh.in@gmail.com</a></div>
+      <div><small>Instagram</small><a href="https://www.instagram.com/sleepwasdreaming/">@sleepwasdreaming</a></div>
+      <div><small>Based in</small>Kolkata, India</div>
+    </div>
+    <footer><span>© Anwesha Ghosh</span><a href="#top">Back to top ↑</a></footer>
+  </div>
+</section>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Viewer">
+  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">←</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">→</button>
+  <div class="lb-inner"><div class="lb-media" id="lbMedia"></div><div class="lb-cap"><b id="lbTitle"></b><span id="lbTag"></span></div></div>
+</div>
+
+<script>
+{
+const videos=[
+  {k:'temple',t:'Golden Hour Temple',g:'Blender · Animation',d:'0:16'},
+  {k:'corridor',t:'Particle Corridor',g:'Blender · Animation',d:'0:21'},
+  {k:'phone',t:'Retro Phone',g:'Blender · Motion',d:'0:08'},
+  {k:'blob',t:'Contained',g:'Blender · Motion loop',d:'0:04'},
+  {k:'room',t:'The Room',g:'Blender · Lighting',d:'0:08'},
+  {k:'cabin',t:'Mountain Cabin',g:'Blender · Breakdown',d:'0:15'}
+];
+const stills=[['blackhole','Black Hole'],['bedroom','Moody Room'],['mushroom','Mushroom Bottle'],['pyramids','Pyramids'],['coke','UV Wrap']];
+const posters=[['exist','I Think, Therefore I Am','Series'],['whatif','What If It All Works Out?','Poster'],['lunatic','In My Head','Typographic poster'],['bohemian','Real Life / Fantasy','Halftone poster']];
+const posters2=[['thoughts','Are Your Thoughts Even Yours?','Collage'],['takeme','Take Me With You','Poster'],['illusion','Illusion','Digital artwork']];
+const events=[['c_debate','Analytica — Logical Legends','Event poster',''],['c_analytica_standee','Analytica','Standee',''],['c_khel_logo','Khel-8','Logo',''],['c_brochure_cover','Khel 7','Event brochure','','c_brochure']];
+
+document.getElementById('vgrid').innerHTML=videos.map((v,i)=>`
+  <button class="card vcard" data-i="${i}" aria-label="Play ${v.t}">
+    <div class="thumb"><img src="img/${v.k}.jpg" alt="" loading="lazy"><video muted loop playsinline preload="none" data-src="media/${v.k}.mp4"></video><span class="play"></span><span class="dur">${v.d}</span></div>
+    <div class="meta"><b>${v.t}</b><span>${v.g}</span></div>
+  </button>`).join('');
+document.getElementById('sgrid').innerHTML=stills.map(([k,t])=>`
+  <button class="card" data-img="img/${k}.jpg" data-title="${t}" data-tag="Blender · Still">
+    <div class="thumb"><img src="img/${k}.jpg" alt="${t}" loading="lazy"></div>
+    <div class="meta"><b>${t}</b><span>Blender · Still</span></div>
+  </button>`).join('');
+document.getElementById('pstack').innerHTML=posters.map(([k,t,g])=>`
+  <button class="card" data-img="img/${k}.jpg" data-title="${t}" data-tag="${g}">
+    <div class="pimg"><img src="img/${k}.jpg" alt="${t}" loading="lazy"></div>
+    <div class="cap"><b>${t}</b><span>${g}</span></div>
+  </button>`).join('');
+document.getElementById('prow').innerHTML=posters2.map(([k,t,g])=>`
+  <button class="card" data-img="img/${k}.jpg" data-title="${t}" data-tag="${g}">
+    <div class="pimg"><img src="img/${k}.jpg" alt="${t}" loading="lazy"></div>
+    <div class="cap"><b>${t}</b><span>${g}</span></div>
+  </button>`).join('');
+document.getElementById('egrid').innerHTML=events.map(([k,t,g,c,full])=>`
+  <button class="card ${c==='wide'?'wide':''}" data-img="img/${full||k}.jpg" data-title="${t}" data-tag="${g}">
+    <div class="pimg ${c==='logo-img'?'logo-img':''}"><img src="img/${k}.jpg" alt="${t} ${g}" loading="lazy" ${c==='wide'?'style="object-position:left center"':''}></div>
+    <div class="cap"><b>${t}</b><span>${g}</span></div>
+  </button>`).join('');
+
+/* hover previews */
+const canHover=matchMedia('(hover:hover)').matches;
+document.querySelectorAll('.vcard').forEach(card=>{
+  const v=card.querySelector('video');
+  const start=()=>{if(!v.src)v.src=v.dataset.src;card.classList.add('playing');v.play().catch(()=>{})};
+  const stop=()=>{card.classList.remove('playing');v.pause()};
+  if(canHover){card.addEventListener('mouseenter',start);card.addEventListener('mouseleave',stop);card.addEventListener('focus',start);card.addEventListener('blur',stop)}
+});
+/* on touch screens, preview cards as they scroll into view */
+if(!canHover&&'IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{const c=e.target,v=c.querySelector('video');if(e.isIntersecting){if(!v.src)v.src=v.dataset.src;c.classList.add('playing');v.play().catch(()=>{})}else{v.pause();c.classList.remove('playing')}}),{threshold:.6});
+  document.querySelectorAll('.vcard').forEach(c=>io.observe(c));
+}
+
+/* lightbox */
+const lb=document.getElementById('lb'),media=document.getElementById('lbMedia'),ttl=document.getElementById('lbTitle'),tag=document.getElementById('lbTag');
+const items=[{type:'video',src:'media/ocean.mp4',t:'Storm',g:'Blender · Animation · 0:08'},...videos.map(v=>({type:'video',src:`media/${v.k}.mp4`,t:v.t,g:`${v.g} · ${v.d}`}))];
+let cur=0,list=items;
+const imgItems=[...document.querySelectorAll('.card[data-img]')].map(c=>({type:'img',src:c.dataset.img,t:c.dataset.title,g:c.dataset.tag}));
+function show(i){
+  cur=(i+list.length)%list.length;const it=list[cur];
+  media.innerHTML='';
+  if(it.type==='video'){const v=document.createElement('video');v.src=it.src;v.controls=true;v.autoplay=true;v.loop=true;v.playsInline=true;v.muted=true;media.appendChild(v);v.play().catch(()=>{})}
+  else{const im=document.createElement('img');im.src=it.src;im.alt=it.t;media.appendChild(im)}
+  ttl.textContent=it.t;tag.textContent=it.g;
+}
+function open(l,i){list=l;lb.classList.add('open');document.body.style.overflow='hidden';show(i);document.getElementById('lbClose').focus();const hv=document.getElementById('heroVid');hv.pause()}
+function close(){lb.classList.remove('open');media.innerHTML='';document.body.style.overflow='';document.getElementById('heroVid').play().catch(()=>{})}
+document.querySelectorAll('.vcard').forEach(c=>c.addEventListener('click',()=>open(items,+c.dataset.i+1)));
+document.getElementById('heroOpen').addEventListener('click',()=>open(items,0));
+document.querySelectorAll('.card[data-img]').forEach((c,i)=>c.addEventListener('click',()=>open(imgItems,i)));
+document.getElementById('lbClose').addEventListener('click',close);
+document.getElementById('lbPrev').addEventListener('click',()=>show(cur-1));
+document.getElementById('lbNext').addEventListener('click',()=>show(cur+1));
+lb.addEventListener('click',e=>{if(e.target===lb)close()});
+addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(cur-1);if(e.key==='ArrowRight')show(cur+1)});
+}
+</script>
+</body>
+</html>
